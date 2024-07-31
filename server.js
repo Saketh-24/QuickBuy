@@ -2,11 +2,13 @@ require("dotenv").config(); // dotenv configuration
 const express = require("express");
 const app = express();
 const dbConnection = require("./config/dataBase");
+const cors = require("cors");
 
 const userRoutes = require("./routes/authRoute");
 
 //middleware
 app.use(express.json());
+app.use(cors()); // CROSS ORIGIN ERROR
 
 //routes
 app.use("/api/auth", userRoutes);

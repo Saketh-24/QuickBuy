@@ -1,0 +1,48 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+
+html {
+  font-size: 18px;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+}
+
+.nav-link {
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.active {
+  background-color: #c8c8c8;
+  border-radius: 15px;
+}
+
+li > .active {
+  color: black !important;
+}
+
+.LoginPage {
+  max-width: 500px;
+  margin: 100px auto;
+}
+
+.SignUpPage {
+  max-width: 500px;
+  margin: 100px auto;
+}
+
+form {
+  width: 80%;
+  margin: auto auto;
+}
