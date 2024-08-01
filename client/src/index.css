@@ -42,3 +42,30 @@ form {
   width: 80%;
   margin: auto auto;
 }
+
+.admin-menu {
+  background-color: rgb(33, 37, 41);
+  color: whitesmoke;
+}
+
+.shadow-lg {
+  /* border: 2px solid black; */
+}
+
+.list-group-item {
+  border: 1px solid wheat;
+  height: 100%;
+  padding: 20px;
+}
+
+.user-detail {
+  display: flex;
+}
+
+.detail {
+  width: 300px;
+}
+
+.user-container {
+  max-width: fit-content;
+}

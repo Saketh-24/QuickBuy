@@ -9,18 +9,32 @@ import PrivateRoute from "./Route/PrivateRoute";
 import Dashboard from "./pages/User/Dashboard";
 import AdminRoute from "./Route/AdminRoute";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
+import AddCatrgory from "./pages/Admin/AddCategory";
+import AddProduct from "./pages/Admin/AddProduct";
+import UsersList from "./pages/Admin/UsersList";
+import Profile from "./pages/User/Profile";
+import Orders from "./pages/User/Orders";
 
 const App = () => {
   return (
     <>
       <Header />
       <Routes>
+        {/* admin routes */}
         <Route path="/dashboard" element={<AdminRoute />}>
           <Route path="admin" element={<AdminDashboard />} />
+          <Route path="admin/addCategory" element={<AddCatrgory />} />
+          <Route path="admin/addProduct" element={<AddProduct />} />
+          <Route path="admin/Users" element={<UsersList />} />
         </Route>
+
+        {/* user routes */}
         <Route path="/dashboard" element={<PrivateRoute />}>
           <Route path="User" element={<Dashboard />} />
+          <Route path="User/Profile" element={<Profile />} />
+          <Route path="User/Orders" element={<Orders />} />
         </Route>
+
         <Route exact path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<SignUp />} />

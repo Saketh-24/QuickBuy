@@ -5,6 +5,7 @@ const dbConnection = require("./config/dataBase");
 const cors = require("cors");
 
 const userRoutes = require("./routes/authRoute");
+const adminRoutes = require("./routes/AdminRoute");
 
 //middleware
 app.use(express.json());
@@ -12,6 +13,7 @@ app.use(cors()); // CROSS ORIGIN ERROR
 
 //routes
 app.use("/api/auth", userRoutes);
+app.use("/api/admin", adminRoutes);
 
 PORT = process.env.PORT || 5000;
 
