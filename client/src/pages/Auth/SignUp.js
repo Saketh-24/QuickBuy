@@ -19,14 +19,14 @@ const SignUp = () => {
         { name, email, password, mobile }
       );
       if (response.data.success) {
-        toast.success(response.data.message);
+        toast.success(response.data.message, { autoClose: 2000 });
         navigate("/login");
       } else {
-        toast.error(response.data.message);
+        toast.error(response.data.message, { autoClose: 2000 });
       }
     } catch (error) {
       console.log(error);
-      toast.error("Something Wrong");
+      toast.error("Something Wrong", { autoClose: 2000 });
     }
   };
 

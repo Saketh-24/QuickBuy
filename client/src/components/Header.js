@@ -8,14 +8,15 @@ import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../context/Auth/AuthContext";
 
 const Header = () => {
-  // eslint-disable-next-line
   const [Auth, setAuth] = useAuth();
 
   // function to remove the user details from localstorage once they click on logout
   const handleAuth = () => {
     setAuth({ ...Auth, user: null, token: "" });
     localStorage.removeItem("auth");
-    toast.success("logout successfull");
+    toast.success("logout successfull", {
+      autoClose: 2000, // Duration in milliseconds
+    });
   };
 
   return (
@@ -54,20 +55,35 @@ const Header = () => {
                   Categories
                 </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink to="/cart" className="nav-link">
-                  <MdOutlineShoppingCart /> Cart<span>(0)</span>
-                </NavLink>
-              </li>
               {Auth.user ? (
-                <li className="nav-item">
+                <li className="nav-item dropdown">
                   <NavLink
-                    onClick={handleAuth}
-                    to="/login"
-                    className="nav-link"
+                    className="nav-link dropdown-toggle"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
                   >
-                    <FiLogIn /> Logout
+                    {Auth.user.name}
                   </NavLink>
+                  <ul className="dropdown-menu">
+                    <li>
+                      <NavLink
+                        to={`/dashboard/${Auth.user.role}`}
+                        className="dropdown-item"
+                      >
+                        Dashboard
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        onClick={handleAuth}
+                        to="/login"
+                        className="dropdown-item"
+                      >
+                        <FiLogIn /> Logout
+                      </NavLink>
+                    </li>
+                  </ul>
                 </li>
               ) : (
                 <li className="nav-item">
@@ -76,6 +92,11 @@ const Header = () => {
                   </NavLink>
                 </li>
               )}
+              <li className="nav-item">
+                <NavLink to="/cart" className="nav-link">
+                  <MdOutlineShoppingCart /> Cart<span>(0)</span>
+                </NavLink>
+              </li>
             </ul>
           </div>
         </div>

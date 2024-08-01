@@ -9,6 +9,7 @@
 
 html {
   font-size: 18px;
+  overflow-wrap: anywhere;
 }
 
 .navbar-brand {
@@ -23,13 +24,8 @@ html {
   gap: 2px;
 }
 
-.active {
-  background-color: #c8c8c8;
-  border-radius: 15px;
-}
-
 li > .active {
-  color: black !important;
+  color: white !important;
 }
 
 .LoginPage {
