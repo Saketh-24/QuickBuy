@@ -3,10 +3,21 @@ import { NavLink, Link } from "react-router-dom";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { GoHomeFill } from "react-icons/go";
 import { FiLogIn } from "react-icons/fi";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useAuth } from "../context/Auth/AuthContext";
 
 const Header = () => {
+  // eslint-disable-next-line
+  const [Auth, setAuth] = useAuth();
+
+  // function to remove the user details from localstorage once they click on logout
+  const handleAuth = () => {
+    setAuth({ ...Auth, user: null, token: "" });
+    localStorage.removeItem("auth");
+    toast.success("logout successfull");
+  };
+
   return (
     <div>
       <ToastContainer />
@@ -48,11 +59,23 @@ const Header = () => {
                   <MdOutlineShoppingCart /> Cart<span>(0)</span>
                 </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink to="/login" className="nav-link">
-                  <FiLogIn /> Login
-                </NavLink>
-              </li>
+              {Auth.user ? (
+                <li className="nav-item">
+                  <NavLink
+                    onClick={handleAuth}
+                    to="/login"
+                    className="nav-link"
+                  >
+                    <FiLogIn /> Logout
+                  </NavLink>
+                </li>
+              ) : (
+                <li className="nav-item">
+                  <NavLink to="/login" className="nav-link">
+                    <FiLogIn /> Login
+                  </NavLink>
+                </li>
+              )}
             </ul>
           </div>
         </div>
