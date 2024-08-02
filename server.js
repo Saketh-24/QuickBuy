@@ -4,16 +4,18 @@ const app = express();
 const dbConnection = require("./config/dataBase");
 const cors = require("cors");
 
-const userRoutes = require("./routes/authRoute");
+const authRoutes = require("./routes/authRoute");
 const adminRoutes = require("./routes/AdminRoute");
+const userRoutes = require("./routes/UserRoute");
 
 //middleware
 app.use(express.json());
 app.use(cors()); // CROSS ORIGIN ERROR
 
 //routes
-app.use("/api/auth", userRoutes);
+app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/user", userRoutes);
 
 PORT = process.env.PORT || 5000;
 
