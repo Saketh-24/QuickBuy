@@ -12,7 +12,7 @@ const addCategory = async (req, res) => {
     const exists = await Category.findOne({ category });
     if (exists)
       return res.status(400).send({
-        success: true,
+        success: false,
         message: "category already exists",
       });
 

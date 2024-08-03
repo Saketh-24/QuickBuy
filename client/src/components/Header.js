@@ -15,7 +15,7 @@ const Header = () => {
     setAuth({ ...Auth, user: null, token: "" });
     localStorage.removeItem("auth");
     toast.success("logout successfull", {
-      autoClose: 2000, // Duration in milliseconds
+      autoClose: 1200, // Duration in milliseconds
     });
   };
 

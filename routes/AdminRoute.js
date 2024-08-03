@@ -7,6 +7,11 @@ const {
   deleteCategory,
 } = require("../controllers/Admin/Category");
 const { protect, isAdmin } = require("../middleware/authMiddleware");
+const {
+  addProduct,
+  updateProduct,
+  deleteProduct,
+} = require("../controllers/Admin/Product");
 
 //users List routes
 router.get("/UsersList", protect, isAdmin, getUsersList);
@@ -15,5 +20,10 @@ router.get("/UsersList", protect, isAdmin, getUsersList);
 router.post("/addCategory", protect, isAdmin, addCategory);
 router.post("/updateCategory/:id", protect, isAdmin, updateCategory);
 router.delete("/deleteCategory/:id", protect, isAdmin, deleteCategory);
+
+//product routes
+router.post("/addProduct", protect, isAdmin, addProduct);
+router.post("/updateProduct/:id", protect, isAdmin, updateProduct);
+router.delete("/deleteProduct/:id", protect, isAdmin, deleteProduct);
 
 module.exports = router;

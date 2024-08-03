@@ -27,7 +27,7 @@ const Login = () => {
         }
       );
       if (response.data.success) {
-        toast.success(response.data.message, { autoClose: 2000 });
+        toast.success(response.data.message, { autoClose: 1200 });
         setAuth({
           ...Auth,
           user: response.data.user,
@@ -36,11 +36,11 @@ const Login = () => {
         localStorage.setItem("auth", JSON.stringify(response.data));
         navigate("/");
       } else {
-        toast.error(response.data.message, { autoClose: 2000 });
+        toast.error(response.data.message, { autoClose: 1200 });
       }
     } catch (error) {
       console.log(error);
-      toast.error("Something Wrong", { autoClose: 2000 });
+      toast.error("Something Wrong", { autoClose: 1200 });
     }
   };
 
