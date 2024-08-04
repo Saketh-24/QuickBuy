@@ -4,12 +4,19 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useAuth } from "../../context/Auth/AuthContext";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 
 const AddCategory = () => {
   const [categories, setCategories] = useState([]);
   const [create, setcreate] = useState(false);
   const [newcategory, setnewcategory] = useState("");
   const [Auth] = useAuth();
+  const [show, setShow] = useState(false);
+  const [updatename, setupdatename] = useState("");
+  const [ID, setID] = useState("");
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     const categoryList = async () => {
@@ -66,6 +73,32 @@ const AddCategory = () => {
     }
   };
 
+  const handleUpdate = async (req, res) => {
+    try {
+      const result = await axios.post(
+        `http://localhost:5000/api/admin/updateCategory/${ID}`,
+        {
+          category: updatename,
+        },
+        { headers: { Authorization: `Bearer ${Auth.token}` } }
+      );
+      if (result.data.success) {
+        toast.success(`${result.data.message}`, { autoClose: 1200 });
+      }
+    } catch (error) {
+      if (error.response) {
+        toast.error(error.response.data.message || "Something went wrong", {
+          autoClose: 1200,
+        });
+      } else if (error.request) {
+        toast.error("No response from server", { autoClose: 1200 });
+      } else {
+        toast.error("Error: " + error.message, { autoClose: 1200 });
+      }
+      console.log(error);
+    }
+  };
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -87,6 +120,7 @@ const AddCategory = () => {
             <div className="col-md-8 d-flex align-items-center">
               <input
                 className="form-control me-2"
+                autoFocus
                 value={newcategory}
                 onChange={(e) => setnewcategory(e.target.value)}
                 type="text"
@@ -115,12 +149,53 @@ const AddCategory = () => {
               <tr key={index}>
                 <th scope="row">{index + 1}</th>
                 <td>{category.category}</td>
-                <td>Actions</td>
+                <td>
+                  <Button
+                    onClick={() => {
+                      handleShow();
+                      setupdatename(category.category);
+                      setID(category._id);
+                    }}
+                    className="btn btn-primary"
+                  >
+                    Edit
+                  </Button>
+                  <Button className="btn ms-2 btn-danger">Delete</Button>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Category</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <input
+            className="form-control me-2"
+            autoFocus
+            value={updatename}
+            onChange={(e) => setupdatename(e.target.value)}
+            type="text"
+            placeholder="Enter category"
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() => {
+              handleUpdate();
+              handleClose();
+            }}
+          >
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
