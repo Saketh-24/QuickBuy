@@ -7,6 +7,7 @@ const {
   deleteCategory,
 } = require("../controllers/Admin/Category");
 const { protect, isAdmin } = require("../middleware/authMiddleware");
+const upload = require("../middleware/multerMiddleware");
 const {
   addProduct,
   updateProduct,
@@ -22,7 +23,13 @@ router.post("/updateCategory/:id", protect, isAdmin, updateCategory);
 router.delete("/deleteCategory/:id", protect, isAdmin, deleteCategory);
 
 //product routes
-router.post("/addProduct", protect, isAdmin, addProduct);
+router.post(
+  "/addProduct",
+  upload.single("productImage"),
+  protect,
+  isAdmin,
+  addProduct
+);
 router.post("/updateProduct/:id", protect, isAdmin, updateProduct);
 router.delete("/deleteProduct/:id", protect, isAdmin, deleteProduct);
 

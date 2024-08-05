@@ -73,13 +73,36 @@ const AddCategory = () => {
     }
   };
 
-  const handleUpdate = async (req, res) => {
+  const handleUpdate = async () => {
     try {
       const result = await axios.post(
         `http://localhost:5000/api/admin/updateCategory/${ID}`,
         {
           category: updatename,
         },
+        { headers: { Authorization: `Bearer ${Auth.token}` } }
+      );
+      if (result.data.success) {
+        toast.success(`${result.data.message}`, { autoClose: 1200 });
+      }
+    } catch (error) {
+      if (error.response) {
+        toast.error(error.response.data.message || "Something went wrong", {
+          autoClose: 1200,
+        });
+      } else if (error.request) {
+        toast.error("No response from server", { autoClose: 1200 });
+      } else {
+        toast.error("Error: " + error.message, { autoClose: 1200 });
+      }
+      console.log(error);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const result = await axios.delete(
+        `http://localhost:5000/api/admin/deleteCategory/${id}`,
         { headers: { Authorization: `Bearer ${Auth.token}` } }
       );
       if (result.data.success) {
@@ -149,18 +172,25 @@ const AddCategory = () => {
               <tr key={index}>
                 <th scope="row">{index + 1}</th>
                 <td>{category.category}</td>
-                <td>
+                <td className="d-flex justify-content-center align-items-center">
                   <Button
                     onClick={() => {
                       handleShow();
-                      setupdatename(category.category);
                       setID(category._id);
+                      setupdatename(category.category);
                     }}
                     className="btn btn-primary"
                   >
                     Edit
                   </Button>
-                  <Button className="btn ms-2 btn-danger">Delete</Button>
+                  <Button
+                    onClick={() => {
+                      handleDelete(category._id);
+                    }}
+                    className="btn ms-2 btn-danger"
+                  >
+                    Delete
+                  </Button>
                 </td>
               </tr>
             ))}
