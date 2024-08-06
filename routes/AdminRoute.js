@@ -30,7 +30,13 @@ router.post(
   isAdmin,
   addProduct
 );
-router.post("/updateProduct/:id", protect, isAdmin, updateProduct);
+router.post(
+  "/updateProduct/:id",
+  upload.single("productImage"),
+  protect,
+  isAdmin,
+  updateProduct
+);
 router.delete("/deleteProduct/:id", protect, isAdmin, deleteProduct);
 
 module.exports = router;

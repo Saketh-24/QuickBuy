@@ -10,6 +10,7 @@ const userRoutes = require("./routes/UserRoute");
 
 //middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors()); // CROSS ORIGIN ERROR
 
 //routes
