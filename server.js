@@ -3,12 +3,14 @@ const express = require("express");
 const app = express();
 const dbConnection = require("./config/dataBase");
 const cors = require("cors");
+const path = require("path");
 
 const authRoutes = require("./routes/authRoute");
 const adminRoutes = require("./routes/AdminRoute");
 const userRoutes = require("./routes/UserRoute");
 
 //middleware
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors()); // CROSS ORIGIN ERROR

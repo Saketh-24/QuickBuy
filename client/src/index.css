@@ -12,6 +12,10 @@ html {
   overflow-wrap: anywhere;
 }
 
+body {
+  background-color: rgba(62, 64, 54, 0.062);
+}
+
 .navbar-brand {
   font-size: 1.5rem;
 }
