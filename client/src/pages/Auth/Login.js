@@ -8,8 +8,14 @@ import { useAuth } from "../../context/Auth/AuthContext";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [checked, setchecked] = useState(true);
   const navigate = useNavigate();
   const [Auth, setAuth] = useAuth();
+
+  const handleCheckbox = () => {
+    if (checked) setchecked(false);
+    else setchecked(true);
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -69,7 +75,7 @@ const Login = () => {
             Password
           </label>
           <input
-            type="password"
+            type={checked ? "password" : "text"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="form-control"
@@ -79,6 +85,7 @@ const Login = () => {
         </div>
         <div className="mb-3 form-check">
           <input
+            onChange={handleCheckbox}
             type="checkbox"
             className="form-check-input"
             id="exampleCheck1"

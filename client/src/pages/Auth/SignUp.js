@@ -8,8 +8,14 @@ const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [checked, setchecked] = useState(true);
   const [mobile, setMobile] = useState("");
   const navigate = useNavigate();
+
+  const handleCheckbox = () => {
+    if (checked) setchecked(false);
+    else setchecked(true);
+  };
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -66,7 +72,7 @@ const SignUp = () => {
           <input
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            type="password"
+            type={checked ? "password" : "text"}
             className="form-control"
             id="password"
             required
@@ -87,6 +93,7 @@ const SignUp = () => {
         </div>
         <div className="mb-3 form-check">
           <input
+            onChange={handleCheckbox}
             type="checkbox"
             className="form-check-input"
             id="exampleCheck1"
