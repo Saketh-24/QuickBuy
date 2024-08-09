@@ -12,7 +12,10 @@ const AddProduct = () => {
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
+  const [rating, setRating] = useState("");
   const [photo, setPhoto] = useState("");
+  const [additionalDetails, setAdditionalDetails] = useState("");
+
   const [Auth] = useAuth();
   // const [shipping, setShipping] = useState("");
 
@@ -43,6 +46,7 @@ const AddProduct = () => {
       formData.append("quantity", quantity);
       formData.append("category", category);
       formData.append("productImage", photo);
+      formData.append("rating", rating);
       // formData.append("shipping", shipping);
 
       const result = await axios.post(
@@ -64,6 +68,7 @@ const AddProduct = () => {
         setPhoto("");
         setPrice("");
         setQuantity("");
+        setRating("");
       } else {
         toast.error(result.data.message || "Form submission failed", {
           autoClose: 1200,
@@ -151,6 +156,17 @@ const AddProduct = () => {
               />
             </Form.Group>
 
+            <Form.Group controlId="formAdditionalDetails" className="mb-3">
+              <Form.Label>Additional Details</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                placeholder="Enter additional details (e.g., weight, dimensions, rating)"
+                value={additionalDetails}
+                onChange={(e) => setAdditionalDetails(e.target.value)}
+              />
+            </Form.Group>
+
             <Form.Group controlId="formPhoto" className="mb-3">
               <Form.Label>Photo</Form.Label>
               <Form.Control
@@ -158,15 +174,27 @@ const AddProduct = () => {
                 onChange={(e) => setPhoto(e.target.files[0])}
               />
             </Form.Group>
-            {/* 
-            <Form.Group controlId="formShipping" className="mb-3">
-              <Form.Check
-                type="checkbox"
-                label="Shipping"
-                checked={shipping}
-                onChange={(e) => setShipping(e.target.checked)}
+
+            <Form.Group controlId="formRating" className="mb-3">
+              <Form.Label>Rating</Form.Label>
+              <Form.Control
+                type="number"
+                placeholder="Enter product rating (1-5)"
+                min="1"
+                max="5"
+                value={rating}
+                onChange={(e) => setRating(e.target.value)}
               />
-            </Form.Group> */}
+            </Form.Group>
+
+            {/* <Form.Group controlId="formShipping" className="mb-3">
+          <Form.Check
+            type="checkbox"
+            label="Shipping"
+            checked={shipping}
+            onChange={(e) => setShipping(e.target.checked)}
+          />
+        </Form.Group> */}
 
             <button className="btn btn-primary w-100 mb-3" type="submit">
               Submit

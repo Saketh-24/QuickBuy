@@ -27,6 +27,9 @@ const productSchema = mongoose.Schema(
     image: {
       type: String,
     },
+    rating: {
+      type: Number,
+    },
     shipping: {
       type: Boolean,
     },

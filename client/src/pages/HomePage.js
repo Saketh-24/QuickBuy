@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../context/Auth/AuthContext";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   const [Auth] = useAuth();
@@ -43,10 +44,7 @@ const HomePage = () => {
               <div className="card">
                 {product.image && (
                   <img
-                    src={`http://localhost:5000/${product.image.replace(
-                      "\\",
-                      "/"
-                    )}`}
+                    src={`http://localhost:5000/${product.image}`}
                     alt={product.name}
                     className="card-img-top"
                     style={{ height: "200px", objectFit: "cover" }}
@@ -73,7 +71,12 @@ const HomePage = () => {
                       {product.quantity > 0 ? "In Stock" : "Out of Stock"}
                     </p>
                   </div>
-                  <button className="btn btn-primary w-100 mt-3">View</button>
+                  <Link
+                    className="btn btn-primary w-100 mt-3"
+                    to={`/product/${product._id}`}
+                  >
+                    View
+                  </Link>
                 </div>
               </div>
             </div>

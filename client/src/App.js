@@ -14,6 +14,7 @@ import AddProduct from "./pages/Admin/AddProduct";
 import UsersList from "./pages/Admin/UsersList";
 import Profile from "./pages/User/Profile";
 import Orders from "./pages/User/Orders";
+import DetailsPage from "./pages/DetailsPage";
 
 const App = () => {
   return (
@@ -36,6 +37,7 @@ const App = () => {
         </Route>
 
         <Route exact path="/" element={<HomePage />} />
+        <Route path="/product/:id" element={<DetailsPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<SignUp />} />
       </Routes>

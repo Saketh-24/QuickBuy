@@ -2,10 +2,18 @@ const Product = require("../../models/ProductModel");
 
 const addProduct = async (req, res) => {
   try {
-    const { name, description, price, category, quantity } = req.body;
+    const { name, description, price, category, quantity, rating } = req.body;
     const image = req.file?.path;
 
-    if (!name || !description || !price || !category || !quantity || !image) {
+    if (
+      !name ||
+      !description ||
+      !price ||
+      !category ||
+      !quantity ||
+      !image ||
+      !rating
+    ) {
       return res.status(400).send({
         success: false,
         message: "All fields are required, including image",
@@ -18,6 +26,7 @@ const addProduct = async (req, res) => {
       price,
       category,
       quantity,
+      rating,
       image,
     });
 
@@ -44,7 +53,7 @@ const updateProduct = async (req, res) => {
     console.log("Request Body:", req.body);
 
     const { id } = req.params;
-    const { name, description, price, category, quantity } = req.body;
+    const { name, description, price, category, quantity, rating } = req.body;
 
     if (!id) {
       return res.status(400).send({
@@ -54,7 +63,14 @@ const updateProduct = async (req, res) => {
     }
 
     // Prepare update fields
-    const updateFields = { name, description, price, category, quantity };
+    const updateFields = {
+      name,
+      description,
+      price,
+      category,
+      quantity,
+      rating,
+    };
     console.log("Update Fields:", updateFields);
 
     // Check if fields are present

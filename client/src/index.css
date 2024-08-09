@@ -73,3 +73,12 @@ form {
 .user-container {
   max-width: fit-content;
 }
+
+.star {
+  font-size: 1.5rem;
+  color: #d3d3d3;
+}
+
+.star.filled {
+  color: #ffd700;
+}
