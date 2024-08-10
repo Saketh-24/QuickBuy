@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css);
 
 * {
   margin: 0;
@@ -81,4 +82,98 @@ form {
 
 .star.filled {
   color: #ffd700;
+}
+
+.prdct-delete:hover {
+  background-color: #ff5b5c;
+  color: #fff;
+}
+
+.cart-empty {
+  text-align: center;
+  padding: 30px;
+}
+
+.cart-empty i {
+  font-size: 45px;
+  color: #d5d6d8;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+.cart-empty p {
+  margin-bottom: 0;
+  color: #bdbdbd;
+  font-size: 16px;
+}
+
+.cart-table td,
+.cart-table th {
+  vertical-align: middle;
+}
+
+.prdct-delete {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 4px;
+  background-color: #fde6e7;
+  color: #ff5b5c;
+  font-size: 15px;
+  transition: 0.3s;
+}
+
+.prdct-qty-btn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 4px;
+  background-color: #5a8dee2e;
+  color: #5a8dee;
+  font-size: 11px;
+  transition: 0.3s;
+}
+
+.prdct-qty-btn:hover {
+  background-color: #5a8dee;
+  color: #fff;
+}
+
+.product-img img {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+}
+
+.qty-input-box {
+  max-width: 70px;
+  padding: 0px 5px;
+  min-height: 40px;
+  border-radius: 4px;
+  text-align: center;
+  display: inline-block;
+  margin: 0px 5px;
+  color: #475f7b;
+  background-color: #fff;
+  border: 1px solid #dfe3e7;
+  transition: 0.3s;
+}
+
+.qty-input-box:focus {
+  color: #475f7b;
+  background-color: #fff;
+  border-color: #5a8dee;
+  outline: 0;
+  box-shadow: 0 3px 8px 0 rgb(0 0 0 / 10%);
+}
+
+.prdct-qty-container {
+  display: flex;
+  align-items: center;
+}
+
+.card-header-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
