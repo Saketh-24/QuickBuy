@@ -1,12 +1,16 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col, Card, Button, Spinner } from "react-bootstrap";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../redux/CartSlice";
+import { toast } from "react-toastify";
 
 const DetailsPage = () => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -16,9 +20,12 @@ const DetailsPage = () => {
         );
         if (response.data.success) {
           setProduct(response.data.SingleProduct);
+        } else {
+          toast.error("Product not found");
         }
       } catch (error) {
         console.error("Error fetching product:", error);
+        toast.error("Failed to fetch product details");
       } finally {
         setLoading(false);
       }
@@ -27,6 +34,13 @@ const DetailsPage = () => {
     fetchProduct();
   }, [id]);
 
+  const handleAddToCart = () => {
+    if (product) {
+      dispatch(addToCart({ ...product, qnty: 1 }));
+      toast.success("Item added to your cart", { autoClose: 1200 });
+    }
+  };
+
   if (loading) return <Spinner animation="border" />;
 
   return (
@@ -34,7 +48,7 @@ const DetailsPage = () => {
       {product ? (
         <Row>
           <Col md={6} className="d-flex align-items-stretch">
-            <Card className="w-100">
+            <Card style={{ width: "100%", border: "none" }}>
               <Card.Img
                 variant="top"
                 src={`http://localhost:5000/${product.image}`}
@@ -53,7 +67,7 @@ const DetailsPage = () => {
                 <strong>Description:</strong> {product.description}
               </Card.Text>
               <Card.Text>
-                <strong>Price:</strong> ${product.price}
+                <strong>Price:</strong> ₹{product.price}
               </Card.Text>
               <Card.Text>
                 <strong>Quantity:</strong>{" "}
@@ -79,7 +93,11 @@ const DetailsPage = () => {
                   ))}
                 </div>
               </Card.Text>
-              <Button disabled={product.quantity <= 0} variant="primary">
+              <Button
+                disabled={product.quantity <= 0}
+                variant="primary"
+                onClick={handleAddToCart}
+              >
                 Add to Cart
               </Button>
             </Card>

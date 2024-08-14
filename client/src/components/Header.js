@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { GoHomeFill } from "react-icons/go";
@@ -6,10 +6,12 @@ import { FiLogIn } from "react-icons/fi";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../context/Auth/AuthContext";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const [Auth, setAuth] = useAuth();
-
+  const { carts } = useSelector((state) => state.allCart);
+  const [CartLength, setCartLength] = useState(0);
   // function to remove the user details from localstorage once they click on logout
   const handleAuth = () => {
     setAuth({ ...Auth, user: null, token: "" });
@@ -18,6 +20,12 @@ const Header = () => {
       autoClose: 1200, // Duration in milliseconds
     });
   };
+
+  useEffect(() => {
+    // Calculate total quantity of items in the cart
+    const totalQuantity = carts.reduce((acc, item) => acc + item.qnty, 0);
+    setCartLength(totalQuantity);
+  }, [carts]);
 
   return (
     <div>
@@ -94,7 +102,7 @@ const Header = () => {
               )}
               <li className="nav-item">
                 <NavLink to="/cart" className="nav-link">
-                  <MdOutlineShoppingCart /> Cart<span>(0)</span>
+                  <MdOutlineShoppingCart /> Cart <span> {CartLength}</span>
                 </NavLink>
               </li>
             </ul>
