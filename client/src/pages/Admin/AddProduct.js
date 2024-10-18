@@ -139,7 +139,7 @@ const AddProduct = () => {
             <Form.Group controlId="formPrice" className="mb-3">
               <Form.Label>Price</Form.Label>
               <Form.Control
-                type="number"
+                type="text"
                 placeholder="Enter product price"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}

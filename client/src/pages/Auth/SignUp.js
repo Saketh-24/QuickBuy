@@ -10,6 +10,7 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [checked, setchecked] = useState(true);
   const [mobile, setMobile] = useState("");
+  const [address, setAddress] = useState("");
   const navigate = useNavigate();
 
   const handleCheckbox = () => {
@@ -22,7 +23,7 @@ const SignUp = () => {
     try {
       const response = await axios.post(
         `http://localhost:5000/api/auth/register`,
-        { name, email, password, mobile }
+        { name, email, password, mobile, address }
       );
       if (response.data.success) {
         toast.success(response.data.message, { autoClose: 1200 });
@@ -85,9 +86,21 @@ const SignUp = () => {
           <input
             value={mobile}
             onChange={(e) => setMobile(e.target.value)}
-            type="number"
             className="form-control"
             id="mobile"
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="address" className="form-label">
+            Address
+          </label>
+          <textarea
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            type="text"
+            className="form-control"
+            id="address"
             required
           />
         </div>

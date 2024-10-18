@@ -20,6 +20,10 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    address: {
+      type: {},
+      required: true,
+    },
     role: {
       type: String,
       default: "User",

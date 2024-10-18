@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  carts: [],
+  carts: JSON.parse(localStorage.getItem("cart")) || [],
 };
 
 // card slice
@@ -11,32 +11,44 @@ const cartSlice = createSlice({
   reducers: {
     // add to cart
     addToCart: (state, action) => {
-      const IteamIndex = state.carts.findIndex(
-        (iteam) => iteam.id === action.payload.id
+      const product = action.payload;
+
+      const productExists = state.carts.find(
+        (item) => item._id === product._id
       );
 
-      if (IteamIndex >= 0) {
-        state.carts[IteamIndex].qnty += 1;
+      if (productExists) {
+        // If product exists, update its quantity
+        state.carts = state.carts.map((item) =>
+          item._id === product._id ? { ...item, qnty: item.qnty + 1 } : item
+        );
       } else {
-        const temp = { ...action.payload, qnty: 1 };
-        state.carts = [...state.carts, temp];
+        // If it's a new product, add it to the cart
+        state.carts.push({ ...product, qnty: 1 });
       }
     },
 
-    // remove perticular iteams
+    // remove particular items
     removeToCart: (state, action) => {
-      const data = state.carts.filter((ele) => ele.id !== action.payload);
+      const data = state.carts.filter((ele) => ele._id !== action.payload);
       state.carts = data;
     },
 
-    // remove single iteams
-    removeSingleIteams: (state, action) => {
-      const IteamIndex_dec = state.carts.findIndex(
-        (iteam) => iteam.id === action.payload.id
+    removeSingleItems: (state, action) => {
+      const itemIndex = state.carts.findIndex(
+        (item) => item._id === action.payload // Using the ID passed to identify the item
       );
 
-      if (state.carts[IteamIndex_dec].qnty >= 1) {
-        state.carts[IteamIndex_dec].qnty -= 1;
+      if (itemIndex !== -1) {
+        // Check if the item exists in the cart
+        if (state.carts[itemIndex].qnty > 1) {
+          state.carts[itemIndex].qnty -= 1; // Decrease quantity if greater than 1
+        } else {
+          // Remove item if quantity is 1
+          state.carts.splice(itemIndex, 1);
+        }
+      } else {
+        console.warn(`Item with ID ${action.payload} not found in cart`); // Debugging line
       }
     },
 
@@ -44,10 +56,19 @@ const cartSlice = createSlice({
     emptycartIteam: (state, action) => {
       state.carts = [];
     },
+
+    setCart: (state, action) => {
+      state.carts = action.payload;
+    },
   },
 });
 
-export const { addToCart, removeToCart, removeSingleIteams, emptycartIteam } =
-  cartSlice.actions;
+export const {
+  addToCart,
+  removeToCart,
+  removeSingleItems,
+  emptycartIteam,
+  setCart,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

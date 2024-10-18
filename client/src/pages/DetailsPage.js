@@ -36,7 +36,29 @@ const DetailsPage = () => {
 
   const handleAddToCart = () => {
     if (product) {
-      dispatch(addToCart({ ...product, qnty: 1 }));
+      const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      // Check if the product is already in the cart
+      const productExists = storedCart.find((item) => item._id === product._id);
+
+      let updatedCart;
+
+      if (productExists) {
+        // If the product is already in the cart, increase the quantity
+        updatedCart = storedCart.map((item) =>
+          item._id === product._id ? { ...item, qnty: item.qnty + 1 } : item
+        );
+      } else {
+        // If it's a new product, add it to the cart
+        updatedCart = [...storedCart, { ...product, qnty: 1 }];
+      }
+
+      // Dispatch to Redux store
+      dispatch(addToCart(updatedCart));
+
+      // Update localStorage
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+
       toast.success("Item added to your cart", { autoClose: 1200 });
     }
   };

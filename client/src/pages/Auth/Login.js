@@ -40,7 +40,13 @@ const Login = () => {
           token: response.data.token,
         });
         localStorage.setItem("auth", JSON.stringify(response.data));
-        navigate("/");
+        const cartItems = JSON.parse(localStorage.getItem("cart"));
+
+        if (Array.isArray(cartItems) && cartItems.length > 0) {
+          navigate("/cart");
+        } else {
+          navigate("/");
+        }
       } else {
         toast.error(response.data.message, { autoClose: 1200 });
       }

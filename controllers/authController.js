@@ -5,10 +5,10 @@ const jwt = require("jsonwebtoken");
 // register controller
 
 const register = async (req, res) => {
-  const { name, email, password, mobile, role } = req.body;
+  const { name, email, password, mobile, address, role } = req.body;
   try {
     // validation
-    if (!name || !email || !password || !mobile) {
+    if (!name || !email || !password || !mobile || !address) {
       return res.status(401).send({
         success: false,
         message: "please add all the fields",
@@ -28,6 +28,7 @@ const register = async (req, res) => {
       email,
       password: hashedpassword,
       mobile,
+      address,
       role,
     });
     return res.status(200).send({
@@ -82,6 +83,7 @@ const login = async (req, res) => {
         name: user.name,
         email: user.email,
         mobile: user.mobile,
+        address: user.address,
         role: user.role,
       },
       token,
