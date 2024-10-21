@@ -79,11 +79,14 @@ const PaymentController = async (req, res) => {
   try {
     const { cart, nonce } = req.body;
     let total = 0;
-    cart.map((item) => {
+
+    // Calculate total price based on product price and quantity
+    cart.forEach((item) => {
       total += item.price * item.qnty;
-      console.log(item);
     });
-    let newTranscation = gateway.transaction.sale(
+
+    // Create a new transaction using the payment gateway
+    gateway.transaction.sale(
       {
         amount: total,
         paymentMethodNonce: nonce,
@@ -91,26 +94,53 @@ const PaymentController = async (req, res) => {
           submitForSettlement: true,
         },
       },
-      function (error, result) {
+      async function (error, result) {
         if (result) {
+          // Map cart items to the required format for Orders schema
+          const orderProducts = cart.map((item) => ({
+            product: item._id, // Assuming _id is the ObjectId of the product
+            qnty: item.qnty,
+            price: item.price,
+            rating: item.rating, // Including rating if necessary
+          }));
+
+          // Create and save the order
           const order = new Orders({
-            products: cart,
-            payment: result,
-            buyer: req.user.id,
-          }).save();
+            products: orderProducts,
+            payment: result, // Save the transaction result
+            buyer: req.user.id, // Assuming req.user.id holds the buyer's ID
+          });
+
+          await order.save(); // Ensure the order is saved asynchronously
+
+          // Respond with success
           res.json({ ok: true });
         } else {
+          // Handle payment error
           res.status(500).send(error);
         }
       }
     );
   } catch (error) {
     console.log(error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
+const getOrders = async (req, res) => {
+  try {
+    const orders = await Orders.find({ buyer: req.user.id }).populate(
+      "products.product"
+    );
+    res.json(orders);
+  } catch (error) {
+    res.status(500).send("Error fetching orders");
   }
 };
 
 module.exports = {
   getProducts,
+  getOrders,
   getproductByID,
   TokenController,
   PaymentController,
