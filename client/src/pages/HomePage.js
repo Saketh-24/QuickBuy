@@ -7,8 +7,10 @@ const HomePage = () => {
   const [Auth] = useAuth();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Fetch all products
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -20,6 +22,7 @@ const HomePage = () => {
         );
         if (response.data.success) {
           setProducts(response.data.products);
+          setFilteredProducts(response.data.products); // Initially show all products
         }
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -31,6 +34,7 @@ const HomePage = () => {
     fetchProducts();
   }, [Auth.token]);
 
+  // Fetch all categories
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -42,7 +46,6 @@ const HomePage = () => {
         );
         if (response.data.success) {
           setCategories(response.data.categories);
-          console.log(categories);
         }
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -54,6 +57,14 @@ const HomePage = () => {
     fetchCategories();
   }, [Auth.token]);
 
+  // Filter products based on category
+  const changeCategory = (categoryObj) => {
+    const filtered = products.filter(
+      (product) => product.category._id === categoryObj._id
+    );
+    setFilteredProducts(filtered);
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -63,7 +74,12 @@ const HomePage = () => {
       <div className="top-bar">
         <div className="category-container">
           {categories.map((category, index) => (
-            <div className="category" key={index}>
+            <div
+              className="category"
+              key={index}
+              onClick={() => changeCategory(category)} // Pass entire category object
+              style={{ cursor: "pointer" }}
+            >
               {category.category}
             </div>
           ))}
@@ -72,8 +88,8 @@ const HomePage = () => {
       <div className="container">
         <h1 className="text-center m-3">Products</h1>
         <div className="row">
-          {products.length > 0 ? (
-            products.map((product) => (
+          {filteredProducts.length > 0 ? (
+            filteredProducts.map((product) => (
               <div key={product._id} className="col-md-4 mb-4">
                 <div className="card">
                   {product.image && (
@@ -116,7 +132,7 @@ const HomePage = () => {
               </div>
             ))
           ) : (
-            <p>No products available</p>
+            <p>No products available in this category</p>
           )}
         </div>
       </div>

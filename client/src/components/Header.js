@@ -58,11 +58,18 @@ const Header = () => {
                   Home
                 </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink to="/categories" className="nav-link">
-                  Categories
-                </NavLink>
-              </li>
+              {Auth.user ? (
+                <li>
+                  <NavLink
+                    to={`/dashboard/${Auth.user?.role}`}
+                    className="nav-link"
+                  >
+                    Dashboard
+                  </NavLink>
+                </li>
+              ) : (
+                <></>
+              )}
               {Auth.user ? (
                 <li className="nav-item dropdown">
                   <NavLink
@@ -74,14 +81,6 @@ const Header = () => {
                     {Auth.user.name}
                   </NavLink>
                   <ul className="dropdown-menu">
-                    <li>
-                      <NavLink
-                        to={`/dashboard/${Auth.user.role}`}
-                        className="dropdown-item"
-                      >
-                        Dashboard
-                      </NavLink>
-                    </li>
                     <li>
                       <NavLink
                         onClick={handleAuth}
