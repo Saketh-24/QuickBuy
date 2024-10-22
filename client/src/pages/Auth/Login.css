@@ -1,0 +1,37 @@
+body {
+  background-color: #f8f9fa; /* Light background color */
+}
+
+.login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Full height */
+  background: linear-gradient(
+    135deg,
+    #6e7f80 0%,
+    #d5d8dc 100%
+  ); /* Gradient background */
+}
+
+.login-container {
+  background: white; /* White background for form */
+  padding: 2rem;
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  width: 500px; /* Fixed width */
+}
+
+.login-container h2 {
+  margin-bottom: 1.5rem; /* Spacing below heading */
+  color: #343a40; /* Darker text color */
+}
+
+.signup-link {
+  color: #007bff; /* Bootstrap primary color */
+  text-decoration: none;
+}
+
+.signup-link:hover {
+  text-decoration: underline; /* Underline on hover */
+}
