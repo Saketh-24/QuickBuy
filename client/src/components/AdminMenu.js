@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 const AdminMenu = () => {
   return (
     <>
-      <div className="shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+      <div className="shadow-lg p-3 mb-2 bg-body-tertiary rounded">
         <div className="text-center admin-menu">
           <div className="d-flex justify-content-evenly">
             <NavLink

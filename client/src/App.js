@@ -16,6 +16,7 @@ import Profile from "./pages/User/Profile";
 import Orders from "./pages/User/Orders";
 import DetailsPage from "./pages/DetailsPage";
 import CartDetails from "./pages/CartDetails";
+import AdminOrders from "./pages/Admin/AdminOrders";
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
           <Route path="admin/addCategory" element={<AddCatrgory />} />
           <Route path="admin/addProduct" element={<AddProduct />} />
           <Route path="admin/Users" element={<UsersList />} />
+          <Route path="admin/Orders" element={<AdminOrders />} />
         </Route>
 
         {/* user routes */}

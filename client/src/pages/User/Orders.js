@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import UserMenu from "../../components/UserMenu";
 import { useAuth } from "../../context/Auth/AuthContext";
@@ -18,7 +18,7 @@ const Orders = () => {
               Authorization: `Bearer ${Auth.token}`, // Include token in headers
             },
           }
-        ); // Adjust the API endpoint as needed
+        );
         console.log(data);
         setOrders(data);
       } catch (error) {
@@ -27,11 +27,31 @@ const Orders = () => {
     };
 
     fetchOrders();
-  }, []);
+  }, [Auth.token]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString(); // Formats the date to "MM/DD/YYYY"
+  };
+
+  // Function to determine text color based on order status
+  const getStatusClass = (status) => {
+    switch (status) {
+      case "Processed":
+        return "text-success"; // Green
+      case "Not Processed":
+        return "text-danger"; // Red
+      case "Processing":
+        return "text-warning"; // Yellow/Orange
+      case "Shipped":
+        return "text-primary"; // Blue
+      case "Delivered":
+        return "text-info"; // Light blue
+      case "Cancelled":
+        return "text-secondary"; // Grey
+      default:
+        return "text-dark"; // Default Black
+    }
   };
 
   return (
@@ -84,7 +104,9 @@ const Orders = () => {
                   <td className="text-right">
                     ₹ {product.qnty * product.price}
                   </td>
-                  <td className="text-right">{order.status}</td>
+                  <td className={`text-right ${getStatusClass(order.status)}`}>
+                    {order.status}
+                  </td>
                 </tr>
               ))
             )}

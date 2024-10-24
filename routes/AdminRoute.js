@@ -12,6 +12,7 @@ const {
   addProduct,
   updateProduct,
   deleteProduct,
+  updateOrderStatus,
 } = require("../controllers/Admin/Product");
 
 //users List routes
@@ -38,5 +39,9 @@ router.post(
   updateProduct
 );
 router.delete("/deleteProduct/:id", protect, isAdmin, deleteProduct);
+
+//update orders
+
+router.put("/orders/:orderId/status", protect, isAdmin, updateOrderStatus);
 
 module.exports = router;

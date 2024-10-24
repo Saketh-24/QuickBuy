@@ -99,11 +99,19 @@ const Header = () => {
                   </NavLink>
                 </li>
               )}
-              <li className="nav-item">
-                <NavLink to="/cart" className="nav-link">
-                  <MdOutlineShoppingCart /> Cart <span> {CartLength}</span>
-                </NavLink>
-              </li>
+              {Auth.user?.role === "admin" ? (
+                <li className="nav-item">
+                  <NavLink to="dashboard/admin/Orders" className="nav-link">
+                    <MdOutlineShoppingCart /> Orders
+                  </NavLink>
+                </li>
+              ) : (
+                <li className="nav-item">
+                  <NavLink to="/cart" className="nav-link">
+                    <MdOutlineShoppingCart /> Cart <span> {CartLength}</span>
+                  </NavLink>
+                </li>
+              )}
             </ul>
           </div>
         </div>

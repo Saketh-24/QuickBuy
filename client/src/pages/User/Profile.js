@@ -52,11 +52,15 @@ const Profile = () => {
 
   return (
     <div className="container-fluid">
-      <div className="row">
-        <div className="flex">
-          <UserMenu />
+      {Auth.user?.role === "admin" ? (
+        <></>
+      ) : (
+        <div className="row">
+          <div className="flex">
+            <UserMenu />
+          </div>
         </div>
-      </div>
+      )}
       <div className="SignUpPage">
         <form onSubmit={handleSubmit}>
           <div className="mb-3">

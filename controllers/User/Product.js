@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 var braintree = require("braintree");
+const User = require("../../models/UserModel");
 
 //payment gateway
 var gateway = new braintree.BraintreeGateway({
@@ -129,11 +130,23 @@ const PaymentController = async (req, res) => {
 
 const getOrders = async (req, res) => {
   try {
+    // Find the user based on the ID from the request
+    const admin = await User.findById(req.user.id);
+
+    // Check if the user is an admin
+    if (admin.role === "admin") {
+      // Fetch all orders for admins
+      const orders = await Orders.find({}).populate("products.product");
+      return res.json(orders);
+    }
+
+    // If not an admin, fetch only the orders for the specific buyer
     const orders = await Orders.find({ buyer: req.user.id }).populate(
       "products.product"
     );
-    res.json(orders);
+    return res.json(orders);
   } catch (error) {
+    console.error("Error fetching orders:", error);
     res.status(500).send("Error fetching orders");
   }
 };

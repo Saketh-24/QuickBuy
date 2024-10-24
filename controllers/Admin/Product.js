@@ -1,4 +1,5 @@
 const Product = require("../../models/ProductModel");
+const Orders = require("../../models/OrderModel");
 
 const addProduct = async (req, res) => {
   try {
@@ -147,4 +148,35 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-module.exports = { addProduct, updateProduct, deleteProduct };
+const updateOrderStatus = async (req, res) => {
+  try {
+    const { orderId } = req.params; // Extract orderId from URL params
+    const { status } = req.body; // Extract the new status from request body
+
+    // Find the order by ID and update the status
+    const updatedOrder = await Orders.findByIdAndUpdate(
+      orderId,
+      { status }, // Update only the status field
+      { new: true } // Return the updated order
+    );
+
+    if (!updatedOrder) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    res.json({
+      message: "Order status updated successfully",
+      updatedOrder,
+    });
+  } catch (error) {
+    console.error("Error updating order status:", error);
+    res.status(500).json({ error: "Error updating order status" });
+  }
+};
+
+module.exports = {
+  addProduct,
+  updateProduct,
+  deleteProduct,
+  updateOrderStatus,
+};
