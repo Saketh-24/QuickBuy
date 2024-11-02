@@ -172,7 +172,7 @@ const AddCategory = () => {
               <tr key={index}>
                 <th scope="row">{index + 1}</th>
                 <td>{category.category}</td>
-                <td className="d-flex justify-content-center align-items-center">
+                <td className="d-flex align-items-start">
                   <Button
                     onClick={() => {
                       handleShow();
@@ -188,6 +188,7 @@ const AddCategory = () => {
                       handleDelete(category._id);
                     }}
                     className="btn ms-2 btn-danger"
+                    style={{ backgroundColor: "red" }}
                   >
                     Delete
                   </Button>

@@ -1,11 +1,18 @@
 const Product = require("../../models/ProductModel");
 const Orders = require("../../models/OrderModel");
+const cloudinary = require("../../utils/cloudinary");
+const upload = require("../../middleware/multerMiddleware");
 
 const addProduct = async (req, res) => {
   try {
-    const { name, description, price, category, quantity, rating } = req.body;
-    const image = req.file?.path;
+    // Upload the image to Cloudinary
+    const result = await cloudinary.uploader.upload(req.file.path);
 
+    // Extract details from the request body
+    const { name, description, price, category, quantity, rating } = req.body;
+    const image = result.secure_url; // URL from Cloudinary
+
+    // Validate required fields
     if (
       !name ||
       !description ||
@@ -15,12 +22,13 @@ const addProduct = async (req, res) => {
       !image ||
       !rating
     ) {
-      return res.status(400).send({
+      return res.status(400).json({
         success: false,
         message: "All fields are required, including image",
       });
     }
 
+    // Create and save the new product
     const newProduct = new Product({
       name,
       description,
@@ -28,21 +36,21 @@ const addProduct = async (req, res) => {
       category,
       quantity,
       rating,
-      image,
+      image, // Store the Cloudinary URL
     });
 
     await newProduct.save();
 
-    return res.status(201).send({
+    return res.status(201).json({
       success: true,
       message: "Product added successfully",
       product: newProduct,
     });
   } catch (error) {
-    return res.status(500).send({
+    return res.status(500).json({
       success: false,
       message: "Something went wrong on the server side",
-      error,
+      error: error.message,
     });
   }
 };

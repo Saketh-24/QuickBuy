@@ -94,10 +94,10 @@ const HomePage = () => {
                 <div className="card">
                   {product.image && (
                     <img
-                      src={`http://localhost:5000/${product.image}`}
+                      src={product.image}
                       alt={product.name}
                       className="card-img-top"
-                      style={{ height: "200px", objectFit: "cover" }}
+                      style={{ height: "200px", objectFit: "contain" }}
                     />
                   )}
                   <div className="card-body">

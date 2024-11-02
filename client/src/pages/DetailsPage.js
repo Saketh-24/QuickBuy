@@ -73,7 +73,7 @@ const DetailsPage = () => {
             <Card style={{ width: "100%", border: "none" }}>
               <Card.Img
                 variant="top"
-                src={`http://localhost:5000/${product.image}`}
+                src={product.image}
                 alt={product.name}
                 className="card-img-cover"
               />
