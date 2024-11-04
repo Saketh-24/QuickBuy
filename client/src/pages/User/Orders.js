@@ -81,10 +81,7 @@ const Orders = () => {
                   <td>{formatDate(order.createdAt)}</td>
                   <td>
                     <div className="product-img">
-                      <img
-                        src={`http://localhost:5000/${product.product.image}`}
-                        alt=""
-                      />
+                      <img src={product.product.image} alt="" />
                     </div>
                   </td>
                   <td>
@@ -102,7 +99,7 @@ const Orders = () => {
                     </div>
                   </td>
                   <td className="text-right">
-                    ₹ {product.qnty * product.price}
+                    $ {product.qnty * product.price}
                   </td>
                   <td className={`text-right ${getStatusClass(order.status)}`}>
                     {order.status}

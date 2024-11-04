@@ -205,10 +205,7 @@ const CartDetails = () => {
                           </td>
                           <td>
                             <div className="product-img">
-                              <img
-                                src={`http://localhost:5000/${data.image}`}
-                                alt=""
-                              />
+                              <img src={data.image} alt="" />
                             </div>
                           </td>
                           <td>

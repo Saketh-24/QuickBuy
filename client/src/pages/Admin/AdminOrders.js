@@ -92,14 +92,14 @@ const AdminOrders = () => {
                   <td>
                     <div className="product-img">
                       <img
-                        src={`http://localhost:5000/${product.product.image}`}
+                        src={product.product.image}
                         alt=""
                         style={{ width: "50px" }}
                       />
                     </div>
                   </td>
                   <td>{product.product.name}</td>
-                  <td>₹ {product.price}</td>
+                  <td>$ {product.price}</td>
                   <td>
                     <input
                       type="text"
